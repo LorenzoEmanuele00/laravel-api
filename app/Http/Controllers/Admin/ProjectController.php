@@ -18,9 +18,10 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        // dd($request->perPage);
+        $projects = Project::paginate(10);
 
         return view('admin.projects.index', compact('projects'));
     }

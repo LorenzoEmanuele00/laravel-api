@@ -39,6 +39,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div>
+                {{$projects->links()}}
+            </div>
         @else
             <h2> Create your own Project</h2>
         @endif
