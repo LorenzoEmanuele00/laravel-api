@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -50,6 +51,12 @@ class ProjectController extends Controller
         $new_project = new Project();
         // $new_project->setTitleAttributes($form_data['title']);
         $new_project->fill($form_data);
+
+        if($request->hasFile('project_image')) {
+            $path = Storage::put('project_images', $request->project_image);
+            $new_project->project_image = $path;
+        }
+
         $new_project->save();
 
         if ($request->has('technologies')) {
@@ -95,6 +102,16 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $form_data = $request->validated();
+
+        if($request->hasFile('project_image')) {
+            if($project->project_image) {
+                Storage::delete($project->project_image);
+            }
+
+            $path = Storage::put('project_images', $request->project_image);
+            $form_data['project_image'] = $path;
+        }
+
         $project->update($form_data);
 
         if($request->has('technologies')){

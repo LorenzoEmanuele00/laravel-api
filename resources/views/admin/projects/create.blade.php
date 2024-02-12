@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container my-3">
-        <form action="{{route('admin.projects.store')}}" method="POST">
+        <form action="{{route('admin.projects.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3 w-50 mx-auto has-validation">
                 <label for="title" class="form-label">Titolo</label>
@@ -27,6 +27,10 @@
                 </div>
             @endforeach
             <div class="mb-3 w-50 mx-auto">
+                <label for="project_image" class="form-label">Scegli immagine</label>
+                <input class="form-control" type="file" id="project_image" name="project_image" value="{{ old('project_image') }}">
+            </div>
+            <div class="mb-3 w-50 mx-auto">
                 <label for="description" class="form-label">Descrizione</label>
                 <textarea class="form-control" id="description" rows="3" name="description">{{ old('description') }}</textarea>
             </div>
@@ -35,3 +39,4 @@
         </form>
     </div>
 @endsection
+

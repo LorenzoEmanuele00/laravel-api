@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container my-3">
-        <form action="{{route('admin.projects.update', ['project' => $project->slug])}}" method="POST"> 
+        <form action="{{route('admin.projects.update', ['project' => $project->slug])}}" method="POST"  enctype="multipart/form-data"> 
             @csrf
             @method('PUT')
             <div class="mb-3 w-50 mx-auto has-validation">
@@ -27,6 +27,13 @@
                     <input class="form-check-input" type="checkbox" value="{{$technology->id}}" id="technology_{{$technology->id}}" name="technologies[]" @checked($errors->any() ? in_array($technology->id, old('technologies', [])) : $project->technologies->contains($technology))>
                 </div>
             @endforeach
+            <div class="mb-3 w-50 mx-auto">
+                <label for="project_image" class="form-label">Scegli immagine</label>
+                <input class="form-control" type="file" id="project_image" name="project_image" value="{{ old('project_image', $project->project_image) }}">
+            </div>
+            <div class="mb-3 text-center">
+                <img id="preview-img" src="{{ asset('storage/' . $project->project_image) }}" alt="" style="max-height: 250px">
+            </div>
             <div class="mb-3 w-50 mx-auto">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" rows="3" name="description">{{old('description', $project->description)}}</textarea>
